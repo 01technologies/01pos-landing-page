@@ -305,33 +305,32 @@
 
             // Create the email content (this is just a simulation)
             const emailContent = `
-                First Name: ${formObject.fname}\n
-                Last Name: ${formObject.lname}\n
-                Company: ${formObject.company}\n
-                Phone: ${formObject.phone}\n
-                Email: ${formObject.email}
+                firstname: ${formObject.fname}\n
+                lastname: ${formObject.lname}\n
+                company: ${formObject.company}\n
+                phone: ${formObject.phone}\n
+                email: ${formObject.email}
             `;
+            console.log(emailContent);
 
             // Send the email (this is a simulation, you need a backend service to actually send the email)
-            fetch('https://example.com/send-email', {
+            fetch('https://01pos2.01technologies.net/api/landing-page/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    to: 'hello@01pos.net',
-                    subject: 'New POS System Form Submission',
-                    text: emailContent
+                    emailContent
                 })
             })
             .then(response => response.json())
             .then(data => {
                 alert('Form submitted successfully!');
-                console.log('Success:', data);
+                
             })
             .catch(error => {
                 alert('There was an error submitting the form.');
-                console.error('Error:', error);
+               
             });
         });
     </script>
