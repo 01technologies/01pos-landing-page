@@ -216,36 +216,37 @@
             <h2 class="text-center">Get your ideal POS System</h2>
             <h6 class="text-center">You're only a few steps from empowering your business.</h6><br>
             <div class="form">
-                <form>
+                <form id="pos-form">
                     <div class="form-row">
                         <div class="form-col">
                             <label for="fname">First Name</label>
-                            <input type="text" id="fname">
+                            <input type="text" id="fname" name="fname" required>
                         </div>
                         <div class="form-col">
                             <label for="lname">Last Name</label>
-                            <input type="text" id="lname">
+                            <input type="text" id="lname" name="lname" required>
                         </div>
                         <div class="form-col">
                             <label for="company">Company</label>
-                            <input type="text" id="company">
+                            <input type="text" id="company" name="company" required>
                         </div>
                         <div class="form-col">
                             <label for="phone">Phone</label>
-                            <input type="number" id="phone">
+                            <input type="number" id="phone" name="phone" required>
                         </div>
                         <div class="form-col-1">
                             <label for="email">Email</label>
-                            <input type="email" id="email">
+                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-col-1">
-                            <button class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <footer>
         <div class="container">
             <ul>
@@ -292,6 +293,47 @@
                 }
             })
         })
+
+        document.getElementById('pos-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(event.target);
+            const formObject = Object.fromEntries(formData.entries());
+
+            // Log the form data to the console (for testing purposes)
+            console.log(formObject);
+
+            // Create the email content (this is just a simulation)
+            const emailContent = `
+                First Name: ${formObject.fname}\n
+                Last Name: ${formObject.lname}\n
+                Company: ${formObject.company}\n
+                Phone: ${formObject.phone}\n
+                Email: ${formObject.email}
+            `;
+
+            // Send the email (this is a simulation, you need a backend service to actually send the email)
+            fetch('https://example.com/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    to: 'hello@01pos.net',
+                    subject: 'New POS System Form Submission',
+                    text: emailContent
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Form submitted successfully!');
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                alert('There was an error submitting the form.');
+                console.error('Error:', error);
+            });
+        });
     </script>
 </body>
 
